@@ -61,7 +61,7 @@ namespace ExcavationLine
                     listVC[i].H1 = listVC[i].Height - listVC[i].T * Math.Sin(listVC[i].A1);
                     listVC[i].H2 = listVC[i].Height + listVC[i].T * Math.Sin(listVC[i].A2);
                     listVC[i].H0 = listVC[i].H1 - listVC[i].Type * listVC[i].R * Math.Cos(listVC[i].A1);
-                    listVC[i].L = listVC[i].VarslopeUnity - listVC[i].K1 - listVC[i].R * Math.Sin(listVC[i].A1);
+                    listVC[i].L = listVC[i].VarslopeUnity - listVC[i].K1 + listVC[i].Type *  listVC[i].R * Math.Sin(listVC[i].A1);
 
                     //常用计算
                     listVC[i].W = listVC[i].I2 - listVC[i].I1;
@@ -107,7 +107,7 @@ namespace ExcavationLine
         }
 
         /// <summary>
-        /// 由统一里程计算高程
+        /// 由施工里程计算高程
         /// </summary>
         /// <param name="listVC">初始化后的竖曲线要素</param>
         /// <param name="unityMileage">里程</param>
@@ -116,12 +116,19 @@ namespace ExcavationLine
         {
             double height = 0;
             //获得统一里程
-            double unityMileage = DataManagement.GetUnityMileage(listRC, consMile);
-
-            //精确计算
-            //int n = GetPosition(listVC, unityMileage);
-            //常用计算
-            int n = GetPositionCom(listVC, unityMileage);
+            double unityMileage = DataManagement.GetUnityMileage(listRC, consMile);           
+            bool b = true;  //是否精确计算
+            int n;
+            if (b)
+            {
+                //精确计算
+                n = GetPosition(listVC, unityMileage);
+            }
+            else
+            {
+                //常用计算
+                n = GetPositionCom(listVC, unityMileage);
+            }        
             if (n < 0 || n >= listVC.Count)
             {
                 height = 0;
@@ -129,10 +136,8 @@ namespace ExcavationLine
             else
             {
                 VerticalCurve vc = listVC[n];
-                //精确计算
-                //height = AccurateHeight(vc, unityMileage);
-                //常用计算
-                height = CommonHeight(vc, unityMileage);
+                //精确或常用计算
+                height = b ? AccurateHeight(vc, unityMileage) : CommonHeight(vc, unityMileage);
             }
             return height;
         }

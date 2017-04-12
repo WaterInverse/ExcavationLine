@@ -18,11 +18,11 @@ namespace ExcavationLine
             {
                 Console.WriteLine("初始化完成!");
             }
-            double consMile = 170499.75;           
+            double consMile = 156199.871;           
             double h = DataManagement.GetHeightByMileage(listVC, listRC, consMile);
             Console.WriteLine(h);
 
-            //Test(listVC,listRC);
+            Test(listVC,listRC);
             //ExcelW(listVC);
             //CW(listVC);       
             Console.Read();
@@ -36,6 +36,7 @@ namespace ExcavationLine
                 //Console.WriteLine((listVC[i].VarslopeUnity-listVC[i].T)+"\t"+ (listVC[i].VarslopeUnity + listVC[i].T));
                 //Console.WriteLine((listVC[i].T*2-listVC[i].Alpha*listVC[i].R));
                 //Console.WriteLine(listVC[i].I1 + "\t" + listVC[i].A1);
+                Console.WriteLine(listVC[i].L);
             }
             Console.WriteLine(listVC[12].VarslopeUnity-listVC[12].T1);
         }
@@ -55,8 +56,8 @@ namespace ExcavationLine
                 data.Add(listVC[i].Alpha);
                 data.Add(listVC[i].T);
                 data.Add(listVC[i].Type);
-                data.Add(listVC[i].K1);
-                data.Add(listVC[i].K2);
+                data.Add(listVC[i].VarslopeUnity- listVC[i].K1);
+                data.Add(listVC[i].VarslopeUnity+listVC[i].K2);
                 data.Add(listVC[i].H1);
                 data.Add(listVC[i].H2);
                 data.Add(listVC[i].H0);

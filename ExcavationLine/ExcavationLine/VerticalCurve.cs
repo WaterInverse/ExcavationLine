@@ -29,7 +29,7 @@ namespace ExcavationLine
         private double k1;   //变坡点距竖曲线起点里程长度
         private double k2;   //变坡点距竖曲线终点里程长度
         private double h1;   //竖曲线起点高度
-        private double h2;   //竖曲线起点高度
+        private double h2;   //竖曲线终点高度
         private double h0;   //圆心高度
         private double l;    //圆心里程
 

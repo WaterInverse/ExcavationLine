@@ -20,3 +20,8 @@ F:\Work\大地联网测量平台\路基边坡放样\ExcavationLine\ExcavationLin
 F:\Work\大地联网测量平台\路基边坡放样\ExcavationLine\ExcavationLine\bin\Debug\NPOI.OpenXml4Net.dll
 F:\Work\大地联网测量平台\路基边坡放样\ExcavationLine\ExcavationLine\bin\Debug\NPOI.OpenXmlFormats.dll
 F:\Work\大地联网测量平台\路基边坡放样\ExcavationLine\ExcavationLine\obj\Debug\ExcavationLine.csprojResolveAssemblyReference.cache
+F:\Work\myGit\路基放样\ExcavationLine\ExcavationLine\ExcavationLine\obj\Debug\ExcavationLine.exe
+F:\Work\myGit\路基放样\ExcavationLine\ExcavationLine\ExcavationLine\obj\Debug\ExcavationLine.pdb
+F:\Work\myGit\路基放样\ExcavationLine\ExcavationLine\ExcavationLine\bin\Debug\ExcavationLine.exe
+F:\Work\myGit\路基放样\ExcavationLine\ExcavationLine\ExcavationLine\bin\Debug\ExcavationLine.pdb
+F:\Work\myGit\路基放样\ExcavationLine\ExcavationLine\ExcavationLine\obj\Debug\ExcavationLine.csprojResolveAssemblyReference.cache
