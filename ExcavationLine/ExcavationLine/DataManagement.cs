@@ -86,18 +86,19 @@ namespace ExcavationLine
         public static double GetUnityMileage(List<RuptureChain> listRC, double consMileage)
         {
             double unityMileage = Math.Abs(consMileage);
+            double m = Math.Abs(consMileage);
             foreach (RuptureChain rc in listRC)
             {
                 if (consMileage < 0)
                 {
-                    if (unityMileage >= rc.ConsMile && unityMileage < rc.ConsMile + rc.RupchLen)
+                    if (m >= rc.ConsMile)
                     {
                         unityMileage = unityMileage - rc.RupchLen * rc.Type;
                     }
                 }
                 else
                 {
-                    if (unityMileage >= rc.ChainMile)
+                    if (m >= rc.ChainMile)
                     {
                         unityMileage = unityMileage - rc.RupchLen * rc.Type;
                     }
@@ -117,7 +118,7 @@ namespace ExcavationLine
             double height = 0;
             //获得统一里程
             double unityMileage = DataManagement.GetUnityMileage(listRC, consMile);           
-            bool b = true;  //是否精确计算
+            bool b = false;  //是否精确计算
             int n;
             if (b)
             {

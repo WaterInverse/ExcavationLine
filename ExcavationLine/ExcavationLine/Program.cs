@@ -18,7 +18,8 @@ namespace ExcavationLine
             {
                 Console.WriteLine("初始化完成!");
             }
-            double consMile = 156199.871;           
+            double consMile = 156199.871;
+            //Console.WriteLine(DataManagement.GetUnityMileage(listRC, consMile));          
             double h = DataManagement.GetHeightByMileage(listVC, listRC, consMile);
             Console.WriteLine(h);
 
