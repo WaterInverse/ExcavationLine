@@ -141,5 +141,52 @@ namespace ExcavationLine
                 return null;
             }
         }
+
+        //获取路基断面标准参数
+        public static List<Subgrade> GetSubgrade(string name)
+        {
+            if (name != null)
+            {
+                try
+                {
+                    MySqlOperating db = new MySqlOperating();
+                    string sql = "select id,name,qd,zd,dh,s,h from jz_para_subgradesh where name ='" + name + "' order by id";
+                    DataSet ds = db.GetDataSet(sql);
+                    if (ds != null)
+                    {
+                        List<Subgrade> listSub = new List<Subgrade>();
+                        foreach (DataRow row in ds.Tables[0].Rows)
+                        {
+                            Subgrade subgrade = new Subgrade();
+                            subgrade.Id = Convert.ToInt32(row["id"] == DBNull.Value ? 0 : row["id"]);
+                            subgrade.Name = name;                         
+                            subgrade.Qd = Convert.ToDouble(row["qd"] == DBNull.Value ? 0 : row["qd"]);
+                            subgrade.Zd = Convert.ToDouble(row["zd"] == DBNull.Value ? 0 : row["zd"]);
+                            subgrade.Dh = Convert.ToDouble(row["dh"] == DBNull.Value ? 0 : row["dh"]);
+                            subgrade.S = Convert.ToDouble(row["s"] == DBNull.Value ? 0 : row["s"]);
+                            subgrade.H = Convert.ToDouble(row["h"] == DBNull.Value ? 0 : row["h"]);                      
+
+                            listSub.Add(subgrade);
+                        }
+                        db.Close();
+                        return listSub;
+                    }
+                    else
+                    {
+                        db.Close();
+                        return null;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("GetSubgrade:" + e.Message);
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

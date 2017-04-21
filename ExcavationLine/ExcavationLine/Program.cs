@@ -12,18 +12,21 @@ namespace ExcavationLine
         {       
             List<VerticalCurve> listVC = DataAccess.GetVerticalCurvePara();
             List<RuptureChain> listRC = DataAccess.GetChainRupture();
-            // List<SubgradeStd> listSS = DataAccess.GetSubgradeStd("1");
+            List<Subgrade> listSub = DataAccess.GetSubgrade("1");
 
             if (DataManagement.InitializeVC(ref listVC))
             {
                 Console.WriteLine("初始化完成!");
             }
-            double consMile = 156199.871;
-            //Console.WriteLine(DataManagement.GetUnityMileage(listRC, consMile));          
+            double consMile = 156199.871;                     
             double h = DataManagement.GetHeightByMileage(listVC, listRC, consMile);
             Console.WriteLine(h);
 
-            Test(listVC,listRC);
+            double deviation;
+            DataManagement.SlopeCalculate(listSub, 1.5, 2, 8, out deviation);
+            Console.WriteLine(deviation);
+
+            //Test(listVC,listRC);
             //ExcelW(listVC);
             //CW(listVC);       
             Console.Read();

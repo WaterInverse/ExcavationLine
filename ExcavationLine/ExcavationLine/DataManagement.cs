@@ -258,337 +258,468 @@ namespace ExcavationLine
         }
         #endregion
 
-        #region 路基开挖和填方计算
+        //#region 路基开挖和填方计算（老版：由线段长及斜率计算）
+
+        ///// <summary>
+        ///// 初始化路基标准断面数据（外部类调用此接口）
+        ///// </summary>
+        ///// <param name="listSS">路基标准断面数据</param>
+        ///// <returns>路基标准断面各点的偏距高数据</returns>
+        //public static SubgradeSH InitializeSS(List<SubgradeStd> listSS)
+        //{
+        //    if (listSS!=null)
+        //    {                
+        //        //分类
+        //        List<SubgradeStd> lh, ll, rh, rl;
+        //        ClassifySS(listSS, out lh, out ll, out rh, out rl);
+
+        //        //排序
+        //        QuickSortSS(ref lh, 0, lh.Count - 1);
+        //        QuickSortSS(ref ll, 0, ll.Count - 1);
+        //        QuickSortSS(ref rh, 0, rh.Count - 1);
+        //        QuickSortSS(ref rl, 0, rl.Count - 1);
+
+        //        //处理
+        //        SubgradeSH ssh = GetSubgradeSH(lh, ll, rh, rl);
+        //        return ssh;
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 判断是否路基标准断面上（外部类调用此接口）
+        ///// </summary>
+        ///// <param name="ss">路基节点数据</param>
+        ///// <param name="setover">偏距</param>
+        ///// <param name="h">高</param>
+        //public static void HeightJudge(SubgradeSH ss, double setover,double h)
+        //{
+        //    double hh, lh;
+        //    double dh1, dh2;
+        //    //路堑
+        //    if (GetSubgradeHeight(ss, setover, 1, out hh))
+        //    {
+        //        dh1 = h - hh;
+        //        //未完待写
+        //    }
+        //    //路基
+        //    if (GetSubgradeHeight(ss, setover, -1, out lh))
+        //    {
+        //        dh2 = h - lh;
+        //        //未完待写
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 获得指定偏距处标准路基的高
+        ///// </summary>
+        ///// <param name="ss">路基节点数据</param>
+        ///// <param name="setover">偏距</param>
+        ///// <param name="type">路基类型，路堑为1，路堤为-1</param>
+        ///// <param name="h">高</param>
+        ///// <returns>是否计算成功</returns>               
+        //public static bool GetSubgradeHeight(SubgradeSH ss,double setover,int type,out double h)
+        //{
+        //    bool b = true;
+        //    h = 0;
+        //    double s0 = ss.S0;
+        //    double h0 = ss.H0;
+        //    List<NodeData> listND;
+        //    if (setover <= s0)
+        //    {
+        //        listND = type > 0 ? ss.LhList : ss.LlList;
+        //        if (setover >= listND[listND.Count - 1].setover)
+        //        {
+        //            h = GetHeightByListND(listND, setover, s0, h0, -1);
+        //        }
+        //        else
+        //        {
+        //            b = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        listND = type > 0 ? ss.RhList : ss.RlList;
+        //        if (setover <= listND[listND.Count - 1].setover)
+        //        {
+        //            h = GetHeightByListND(listND, setover, s0, h0, 1);
+        //        }
+        //        else
+        //        {
+        //            b = false;
+        //        }
+        //    }
+        //    return b;
+        //}              
+
+        ///// <summary>
+        ///// 根据节点数据获得指定偏距处标准路基的高
+        ///// </summary>
+        ///// <param name="listND">节点数据</param>
+        ///// <param name="setover">偏距</param>
+        ///// <param name="s0">原始点偏距</param>
+        ///// <param name="h0">原始点高</param>
+        ///// <param name="lr">左或右</param>
+        ///// <returns>高</returns>
+        //public static double GetHeightByListND(List<NodeData> listND, double setover, double s0, double h0, int lr)
+        //{
+        //    double h = 0;
+        //    int m = listND.Count;
+        //    if (lr < 0)
+        //    {
+        //        if (setover >= listND[0].setover)
+        //        {
+        //            h = h0 / (s0 - listND[0].setover) * (setover - listND[0].setover);
+        //        }
+        //        else
+        //        {
+        //            for (int i = 1; i < m - 1; i++)
+        //            {
+        //                if (setover >= listND[i].setover)
+        //                {
+        //                    h = listND[i].height + (listND[i - 1].height - listND[i].height) / (listND[i - 1].setover - listND[i].setover) * (setover - listND[i].setover);
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (setover <= listND[0].setover)
+        //        {
+        //            h = h0 / (s0 - listND[0].setover) * (setover - listND[0].setover);
+        //        }
+        //        else
+        //        {
+        //            for (int i = 1; i < m - 1; i++)
+        //            {
+        //                if (setover <= listND[i].setover)
+        //                {
+        //                    h = listND[i].height + (listND[i - 1].height - listND[i].height) / (listND[i - 1].setover - listND[i].setover) * (setover - listND[i].setover);
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return h;
+        //}
+
+
+
+        //#region 初始化计算函数
+        ///// <summary>
+        ///// 路基标准断面数据分类
+        ///// </summary>
+        ///// <param name="listSS">路基标准断面数据</param>
+        ///// <param name="lh">左上</param>
+        ///// <param name="ll">左下</param>
+        ///// <param name="rh">右上</param>
+        ///// <param name="rl">右下</param>
+        //public static void ClassifySS(List<SubgradeStd> listSS, out List<SubgradeStd> lh, out List<SubgradeStd> ll, out List<SubgradeStd> rh, out List<SubgradeStd> rl)
+        //{
+        //    int len = listSS.Count;
+        //    lh = new List<SubgradeStd>();
+        //    ll = new List<SubgradeStd>();
+        //    rh = new List<SubgradeStd>();
+        //    rl = new List<SubgradeStd>();
+        //    for (int i = 0; i < len - 1; i++)
+        //    {
+        //        SubgradeStd ss = listSS[i];
+        //        if (ss.Type > 0)
+        //        {
+        //            if (ss.Lr < 0)
+        //            {
+        //                lh.Add(ss);
+        //            }
+        //            else
+        //            {
+        //                rh.Add(ss);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (ss.Lr < 0)
+        //            {
+        //                ll.Add(ss);
+        //            }
+        //            else
+        //            {
+        //                rl.Add(ss);
+        //            }
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 对分类后的路基标准断面数据快速排序
+        ///// </summary>
+        ///// <param name="lss">分类后的路基标准断面数据</param>
+        ///// <param name="left">初始索引</param>
+        ///// <param name="right">最大索引</param>
+        //public static void QuickSortSS(ref List<SubgradeStd> lss, int left, int right)
+        //{
+        //    if (left < right)
+        //    {
+        //        SubgradeStd keySS = lss[(left + right) / 2];
+        //        int i = left - 1;
+        //        int j = right + 1;
+        //        while (true)
+        //        {
+        //            while (lss[++i].Step < keySS.Step && i < right) ;
+        //            while (lss[--j].Step > keySS.Step && j > 0) ;
+        //            if (i >= j)
+        //            {
+        //                break;
+        //            }
+        //            SubgradeStd ss = lss[i];
+        //            lss[i] = lss[i];
+        //            lss[j] = ss;
+        //        }
+        //        QuickSortSS(ref lss, left, i - 1);
+        //        QuickSortSS(ref lss, j + 1, right);
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 计算偏距高标准断面数据
+        ///// </summary>
+        ///// <param name="lh">左上</param>
+        ///// <param name="ll">左下</param>
+        ///// <param name="rh">右上</param>
+        ///// <param name="rl">右下</param>
+        ///// <returns>偏距高标准断面数据</returns>
+        //public static SubgradeSH GetSubgradeSH(List<SubgradeStd> lh, List<SubgradeStd> ll, List<SubgradeStd> rh, List<SubgradeStd> rl)
+        //{
+        //    SubgradeSH ssh = new SubgradeSH();
+        //    ssh.Name = lh[0].Name;
+        //    double l = lh[0].L;
+        //    double p = lh[0].P;
+        //    double q = lh[0].Q;
+        //    double s1 = lh[0].S1;
+        //    //计算初始点
+        //    ssh.S0 = -l + (l + p + q) / 2;
+        //    ssh.H0 = ll[0].A / 100 * (l + p + q) / 2;
+        //    //计算各点SH
+        //    ssh.LhList = GetCuttingSH(lh);
+        //    ssh.RhList = GetCuttingSH(rh);
+        //    ssh.LlList = GetEmbankmentSH(ll, ssh.S0, ssh.H0);
+        //    ssh.RlList = GetEmbankmentSH(rl, ssh.S0, ssh.H0);
+
+        //    return ssh;
+        //}
+
+        ///// <summary>
+        ///// 计算路堑偏距高
+        ///// </summary>
+        ///// <param name="listCut">路堑标准断面数据</param>
+        ///// <returns>路堑偏距高</returns>
+        //public static List<NodeData> GetCuttingSH(List<SubgradeStd> listCut)
+        //{
+        //    List<NodeData> listND = new List<NodeData>();
+        //    int lr = listCut[0].Lr;
+        //    NodeData nd = new NodeData();
+        //    nd.height = 0;
+        //    if (lr < 0)
+        //    {
+        //        nd.setover = -listCut[0].L;
+        //    }
+        //    else
+        //    {
+        //        nd.setover = listCut[0].P + listCut[0].Q;
+        //    }
+        //    listND.Add(nd);
+        //    int lastIndex = 0;    //总是指向listND最后一个数据
+        //    int n = listCut.Count;
+        //    //排水沟前偏距高计算
+        //    nd.setover = listND[lastIndex].setover + listCut[0].H * listCut[0].M * lr;
+        //    nd.height = listND[lastIndex].height - listCut[0].H;
+        //    listND.Add(nd);
+        //    lastIndex += 1;
+        //    nd.setover = listND[lastIndex].setover + listCut[0].S * lr;
+        //    nd.height = listND[lastIndex].height - listCut[0].S * listCut[0].A;
+        //    listND.Add(nd);
+        //    lastIndex += 1;
+        //    nd.setover += listCut[0].S1 * lr;
+        //    listND.Add(nd);
+        //    //排水沟之后计算
+        //    for (int i = 1; i < n - 1; i++)
+        //    {
+        //        lastIndex += 1;
+        //        nd.setover = listND[lastIndex].setover + listCut[0].S * lr;
+        //        nd.height = listND[lastIndex].height + listCut[0].S * listCut[0].A;
+        //        listND.Add(nd);
+        //        lastIndex += 1;
+        //        nd.setover = listND[lastIndex].setover + listCut[0].H * listCut[0].M * lr;
+        //        nd.height = listND[lastIndex].height + listCut[0].H;
+        //        listND.Add(nd);
+        //    }
+
+        //    return listND;
+        //}
+
+        ///// <summary>
+        ///// 计算路堤偏距高
+        ///// </summary>
+        ///// <param name="listEbm">路堤标准断面数据</param>
+        ///// <param name="s0">初始点偏距</param>
+        ///// <param name="h0">初始点高</param>
+        ///// <returns>路堤偏距高</returns>
+        //public static List<NodeData> GetEmbankmentSH(List<SubgradeStd> listEbm, double s0, double h0)
+        //{
+        //    List<NodeData> listND = new List<NodeData>();
+        //    int lr = listEbm[0].Lr;
+        //    NodeData nd = new NodeData();
+        //    nd.height = s0;
+        //    nd.height = h0;
+        //    listND.Add(nd);
+        //    int n = listEbm.Count;
+        //    int lastIndex = -1;    //总是指向listND最后一个数据
+        //    for (int i = 0; i < n - 1; i++)
+        //    {
+        //        lastIndex += 1;
+        //        nd.setover = listND[lastIndex].setover + listEbm[i].S * lr;
+        //        nd.height = listND[lastIndex].height - listEbm[i].S * listEbm[i].A;
+        //        listND.Add(nd);
+        //        lastIndex += 1;
+        //        nd.setover = listND[lastIndex].setover + listEbm[i].H * listEbm[i].M * lr;
+        //        nd.height = listND[lastIndex].height - listEbm[i].H;
+        //        listND.Add(nd);
+        //    }
+        //    listND.RemoveAt(0);
+        //    return listND;
+        //}
+        //#endregion
+
+        //#endregion
+
+        #region 路基开挖和填方计算（由偏距高计算）
+
         
-        /// <summary>
-        /// 初始化路基标准断面数据（外部类调用此接口）
-        /// </summary>
-        /// <param name="listSS">路基标准断面数据</param>
-        /// <returns>路基标准断面各点的偏距高数据</returns>
-        public static SubgradeSH InitializeSS(List<SubgradeStd> listSS)
+        public static bool SlopeCalculate(List<Subgrade> listSub, double mileage, double setover, double height, out double deviation)
         {
-            if (listSS!=null)
-            {                
-                //分类
-                List<SubgradeStd> lh, ll, rh, rl;
-                ClassifySS(listSS, out lh, out ll, out rh, out rl);
-
-                //排序
-                QuickSortSS(ref lh, 0, lh.Count - 1);
-                QuickSortSS(ref ll, 0, ll.Count - 1);
-                QuickSortSS(ref rh, 0, rh.Count - 1);
-                QuickSortSS(ref rl, 0, rl.Count - 1);
-
-                //处理
-                SubgradeSH ssh = GetSubgradeSH(lh, ll, rh, rl);
-                return ssh;
-            }
-            else
+            bool b = false;
+            deviation = 0;
+            if (listSub != null)
             {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 判断是否路基标准断面上（外部类调用此接口）
-        /// </summary>
-        /// <param name="ss">路基节点数据</param>
-        /// <param name="setover">偏距</param>
-        /// <param name="h">高</param>
-        public static void HeightJudge(SubgradeSH ss, double setover,double h)
-        {
-            double hh, lh;
-            double dh1, dh2;
-            //路堑
-            if (GetSubgradeHeight(ss, setover, 1, out hh))
-            {
-                dh1 = h - hh;
-                //未完待写
-            }
-            //路基
-            if (GetSubgradeHeight(ss, setover, -1, out lh))
-            {
-                dh2 = h - lh;
-                //未完待写
-            }
-        }
-
-        /// <summary>
-        /// 获得指定偏距处标准路基的高
-        /// </summary>
-        /// <param name="ss">路基节点数据</param>
-        /// <param name="setover">偏距</param>
-        /// <param name="type">路基类型，路堑为1，路堤为-1</param>
-        /// <param name="h">高</param>
-        /// <returns>是否计算成功</returns>               
-        public static bool GetSubgradeHeight(SubgradeSH ss,double setover,int type,out double h)
-        {
-            bool b = true;
-            h = 0;
-            double s0 = ss.S0;
-            double h0 = ss.H0;
-            List<NodeData> listND;
-            if (setover <= s0)
-            {
-                listND = type > 0 ? ss.LhList : ss.LlList;
-                if (setover >= listND[listND.Count - 1].setover)
+                double qd = listSub[0].Qd;
+                double zd = listSub[0].Zd;
+                if (mileage >= qd && mileage <= zd)
                 {
-                    h = GetHeightByListND(listND, setover, s0, h0, -1);
+                    double dh = listSub[0].Dh;
+                    List<Point> listP = GetListPoint(listSub);    //获得从左到右坐标（已排序）
+                    //foreach (var item in listP)
+                    //{
+                    //    Console.WriteLine(item.setover);
+                    //}
+
+                    int n = GetPositionBySetover(listP, setover);   //获得需要用到坐标点位置
+                    if (n > 0)
+                    {
+                        double h0 = listP[n - 1].height + (listP[n].height - listP[n - 1].height) / (listP[n].setover - listP[n - 1].setover) * (setover - listP[n - 1].setover);
+                        deviation = height - h0;
+                    }
+                    else
+                    {
+                        //所测偏距超出标准断面规定偏距
+                    }
                 }
                 else
                 {
-                    b = false;
-                }
-            }
-            else
-            {
-                listND = type > 0 ? ss.RhList : ss.RlList;
-                if (setover <= listND[listND.Count - 1].setover)
-                {
-                    h = GetHeightByListND(listND, setover, s0, h0, 1);
-                }
-                else
-                {
-                    b = false;
+                    //所测里程超出标准断面规定里程
                 }
             }
             return b;
-        }              
-
+        }
+        
         /// <summary>
-        /// 根据节点数据获得指定偏距处标准路基的高
+        /// 获得需要用到坐标点位置
         /// </summary>
-        /// <param name="listND">节点数据</param>
+        /// <param name="listP">坐标点</param>
         /// <param name="setover">偏距</param>
-        /// <param name="s0">原始点偏距</param>
-        /// <param name="h0">原始点高</param>
-        /// <param name="lr">左或右</param>
-        /// <returns>高</returns>
-        public static double GetHeightByListND(List<NodeData> listND, double setover, double s0, double h0, int lr)
+        /// <returns>位置索引</returns>
+        public static int GetPositionBySetover(List<Point> listP, double setover)
         {
-            double h = 0;
-            int m = listND.Count;
-            if (lr < 0)
+            int n = -1;
+            if (setover >= listP[0].setover)
             {
-                if (setover >= listND[0].setover)
+                int len = listP.Count - 1;
+                for (int i = 1; i < len; i++)
                 {
-                    h = h0 / (s0 - listND[0].setover) * (setover - listND[0].setover);
-                }
-                else
-                {
-                    for (int i = 1; i < m - 1; i++)
+                    if (setover <= listP[i].setover)
                     {
-                        if (setover >= listND[i].setover)
-                        {
-                            h = listND[i].height + (listND[i - 1].height - listND[i].height) / (listND[i - 1].setover - listND[i].setover) * (setover - listND[i].setover);
-                            break;
-                        }
+                        n = i;
                     }
                 }
             }
-            else
-            {
-                if (setover <= listND[0].setover)
-                {
-                    h = h0 / (s0 - listND[0].setover) * (setover - listND[0].setover);
-                }
-                else
-                {
-                    for (int i = 1; i < m - 1; i++)
-                    {
-                        if (setover <= listND[i].setover)
-                        {
-                            h = listND[i].height + (listND[i - 1].height - listND[i].height) / (listND[i - 1].setover - listND[i].setover) * (setover - listND[i].setover);
-                            break;
-                        }
-                    }
-                }
-            }
-            return h;
-        }
-
-
-
-        #region 初始化计算函数
-        /// <summary>
-        /// 路基标准断面数据分类
-        /// </summary>
-        /// <param name="listSS">路基标准断面数据</param>
-        /// <param name="lh">左上</param>
-        /// <param name="ll">左下</param>
-        /// <param name="rh">右上</param>
-        /// <param name="rl">右下</param>
-        public static void ClassifySS(List<SubgradeStd> listSS, out List<SubgradeStd> lh, out List<SubgradeStd> ll, out List<SubgradeStd> rh, out List<SubgradeStd> rl)
-        {
-            int len = listSS.Count;
-            lh = ll = rh = rl = new List<SubgradeStd>();
-            for (int i = 0; i < len - 1; i++)
-            {
-                SubgradeStd ss = listSS[i];
-                if (ss.Type > 0)
-                {
-                    if (ss.Lr < 0)
-                    {
-                        lh.Add(ss);
-                    }
-                    else
-                    {
-                        rh.Add(ss);
-                    }
-                }
-                else
-                {
-                    if (ss.Lr < 0)
-                    {
-                        ll.Add(ss);
-                    }
-                    else
-                    {
-                        rl.Add(ss);
-                    }
-                }
-            }
+            return n;
         }
 
         /// <summary>
-        /// 对分类后的路基标准断面数据快速排序
+        /// 获得坐标点
         /// </summary>
-        /// <param name="lss">分类后的路基标准断面数据</param>
-        /// <param name="left">初始索引</param>
-        /// <param name="right">最大索引</param>
-        public static void QuickSortSS(ref List<SubgradeStd> lss, int left, int right)
+        /// <param name="listSub">路基标准数据</param>
+        /// <returns>坐标点</returns>
+        public static List<Point> GetListPoint(List<Subgrade> listSub)
+        {
+            List<Point> listP = new List<Point>();
+            int len = listSub.Count;
+            foreach (Subgrade sub in listSub)
+            {
+                Point p = new Point();
+                p.setover = sub.S;
+                p.height = sub.H;
+                listP.Add(p);
+            }
+            QuickSortListP(ref listP, 0, len - 1);
+            return listP;
+        }
+
+        /// <summary>
+        /// 坐标点快速排序
+        /// </summary>
+        /// <param name="listP">坐标点</param>
+        /// <param name="left">左下标</param>
+        /// <param name="right">右下标</param>
+        public static void QuickSortListP(ref List<Point> listP, int left, int right)
         {
             if (left < right)
             {
-                SubgradeStd keySS = lss[(left + right) / 2];
-                int i = left - 1;
-                int j = right + 1;
-                while (true)
+                Point keySS = listP[left];
+                int i = left;
+                int j = right;
+                while (i<j)
                 {
-                    while (lss[++i].Step < keySS.Step && i < right) ;
-                    while (lss[--j].Step > keySS.Step && j > 0) ;
-                    if (i >= j)
+                    while (listP[j].setover >= keySS.setover && j > i)
+                        j--;
+                    if (i<j)
+                    {
+                        listP[i] = listP[j];
+                        i++;
+                    }
+                    else
                     {
                         break;
                     }
-                    SubgradeStd ss = lss[i];
-                    lss[i] = lss[i];
-                    lss[j] = ss;
+                    while (listP[i].setover <= keySS.setover && i < j)
+                        i++;
+                    if (i < j)
+                    {
+                        listP[j] = listP[i];
+                        j--;
+                    }
+                    else
+                    {
+                        break;
+                    }                                       
                 }
-                QuickSortSS(ref lss, left, i - 1);
-                QuickSortSS(ref lss, j + 1, right);
+                listP[i] = keySS;
+                QuickSortListP(ref listP, left, i - 1);
+                QuickSortListP(ref listP, i + 1, right);
             }
         }
-
-        /// <summary>
-        /// 计算偏距高标准断面数据
-        /// </summary>
-        /// <param name="lh">左上</param>
-        /// <param name="ll">左下</param>
-        /// <param name="rh">右上</param>
-        /// <param name="rl">右下</param>
-        /// <returns>偏距高标准断面数据</returns>
-        public static SubgradeSH GetSubgradeSH(List<SubgradeStd> lh, List<SubgradeStd> ll, List<SubgradeStd> rh, List<SubgradeStd> rl)
-        {
-            SubgradeSH ssh = new SubgradeSH();
-            ssh.Name = lh[0].Name;
-            double l = lh[0].L;
-            double p = lh[0].P;
-            double q = lh[0].Q;
-            double s1 = lh[0].S1;
-            //计算初始点
-            ssh.S0 = -l + (l + p + q) / 2;
-            ssh.H0 = ll[0].A / 100 * (l + p + q) / 2;
-            //计算各点SH
-            ssh.LhList = GetCuttingSH(lh);
-            ssh.RhList = GetCuttingSH(rh);
-            ssh.LlList = GetEmbankmentSH(ll, ssh.S0, ssh.H0);
-            ssh.RlList = GetEmbankmentSH(rl, ssh.S0, ssh.H0);
-
-            return ssh;
-        }
-
-        /// <summary>
-        /// 计算路堑偏距高
-        /// </summary>
-        /// <param name="listCut">路堑标准断面数据</param>
-        /// <returns>路堑偏距高</returns>
-        public static List<NodeData> GetCuttingSH(List<SubgradeStd> listCut)
-        {
-            List<NodeData> listND = new List<NodeData>();
-            int lr = listCut[0].Lr;
-            NodeData nd = new NodeData();
-            nd.height = 0;
-            if (lr < 0)
-            {
-                nd.setover = -listCut[0].L;
-            }
-            else
-            {
-                nd.setover = listCut[0].P + listCut[0].Q;
-            }
-            listND.Add(nd);
-            int lastIndex = 0;    //总是指向listND最后一个数据
-            int n = listCut.Count;
-            //排水沟前偏距高计算
-            nd.setover = listND[lastIndex].setover + listCut[0].H * listCut[0].M * lr;
-            nd.height = listND[lastIndex].height - listCut[0].H;
-            listND.Add(nd);
-            lastIndex += 1;
-            nd.setover = listND[lastIndex].setover + listCut[0].S * lr;
-            nd.height = listND[lastIndex].height - listCut[0].S * listCut[0].A;
-            listND.Add(nd);
-            lastIndex += 1;
-            nd.setover += listCut[0].S1 * lr;
-            listND.Add(nd);
-            //排水沟之后计算
-            for (int i = 1; i < n - 1; i++)
-            {
-                lastIndex += 1;
-                nd.setover = listND[lastIndex].setover + listCut[0].S * lr;
-                nd.height = listND[lastIndex].height + listCut[0].S * listCut[0].A;
-                listND.Add(nd);
-                lastIndex += 1;
-                nd.setover = listND[lastIndex].setover + listCut[0].H * listCut[0].M * lr;
-                nd.height = listND[lastIndex].height + listCut[0].H;
-                listND.Add(nd);
-            }
-
-            return listND;
-        }
-
-        /// <summary>
-        /// 计算路堤偏距高
-        /// </summary>
-        /// <param name="listEbm">路堤标准断面数据</param>
-        /// <param name="s0">初始点偏距</param>
-        /// <param name="h0">初始点高</param>
-        /// <returns>路堤偏距高</returns>
-        public static List<NodeData> GetEmbankmentSH(List<SubgradeStd> listEbm, double s0, double h0)
-        {
-            List<NodeData> listND = new List<NodeData>();
-            int lr = listEbm[0].Lr;
-            NodeData nd = new NodeData();
-            nd.height = s0;
-            nd.height = h0;
-            listND.Add(nd);
-            int n = listEbm.Count;
-            int lastIndex = -1;    //总是指向listND最后一个数据
-            for (int i = 0; i < n - 1; i++)
-            {
-                lastIndex += 1;
-                nd.setover = listND[lastIndex].setover + listEbm[i].S * lr;
-                nd.height = listND[lastIndex].height - listEbm[i].S * listEbm[i].A;
-                listND.Add(nd);
-                lastIndex += 1;
-                nd.setover = listND[lastIndex].setover + listEbm[i].H * listEbm[i].M * lr;
-                nd.height = listND[lastIndex].height - listEbm[i].H;
-                listND.Add(nd);
-            }
-            listND.RemoveAt(0);
-            return listND;
-        }
-        #endregion
 
         #endregion
     }
