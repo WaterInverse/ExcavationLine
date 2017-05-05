@@ -143,14 +143,14 @@ namespace ExcavationLine
         }
 
         //获取路基断面标准参数
-        public static List<Subgrade> GetSubgrade(string name)
+        public static List<Subgrade> GetSubgrade(string UnitID,double Mileage)
         {
-            if (name != null)
+            if (UnitID != null)
             {
                 try
                 {
                     MySqlOperating db = new MySqlOperating();
-                    string sql = "select id,name,qd,zd,dh,s,h from jz_para_subgradesh where name ='" + name + "' order by id";
+                    string sql = "select id,name,qd,zd,dh,s,h from jz_para_subgradesh_" + UnitID + " where qd<" + Mileage + " and zd>" + Mileage + " order by s";
                     DataSet ds = db.GetDataSet(sql);
                     if (ds != null)
                     {
@@ -159,7 +159,7 @@ namespace ExcavationLine
                         {
                             Subgrade subgrade = new Subgrade();
                             subgrade.Id = Convert.ToInt32(row["id"] == DBNull.Value ? 0 : row["id"]);
-                            subgrade.Name = name;                         
+                            subgrade.Name = Convert.ToString(row["name"] == DBNull.Value ? 0 : row["name"]);                         
                             subgrade.Qd = Convert.ToDouble(row["qd"] == DBNull.Value ? 0 : row["qd"]);
                             subgrade.Zd = Convert.ToDouble(row["zd"] == DBNull.Value ? 0 : row["zd"]);
                             subgrade.Dh = Convert.ToDouble(row["dh"] == DBNull.Value ? 0 : row["dh"]);

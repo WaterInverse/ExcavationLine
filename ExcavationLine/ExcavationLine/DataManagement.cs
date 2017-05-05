@@ -609,11 +609,11 @@ namespace ExcavationLine
                 if (mileage >= qd && mileage <= zd)
                 {
                     double dh = listSub[0].Dh;
-                    List<Point> listP = GetListPoint(listSub);    //获得从左到右坐标（已排序）
-                    //foreach (var item in listP)
-                    //{
-                    //    Console.WriteLine(item.setover);
-                    //}
+                    List<Point> listP = GetListPoint(listSub);    //获得从左到右坐标（不排序）
+                    foreach (var item in listP)
+                    {
+                        Console.WriteLine(item.setover);
+                    }
 
                     int n = GetPositionBySetover(listP, setover);   //获得需要用到坐标点位置
                     if (n > 0)
@@ -673,7 +673,7 @@ namespace ExcavationLine
                 p.height = sub.H;
                 listP.Add(p);
             }
-            QuickSortListP(ref listP, 0, len - 1);
+            //QuickSortListP(ref listP, 0, len - 1);
             return listP;
         }
 
